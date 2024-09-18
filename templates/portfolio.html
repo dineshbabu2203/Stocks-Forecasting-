@@ -1,0 +1,266 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: gilroy;
+            color: #fff;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            background-color: #111;
+        }
+
+        nav {
+            position: fixed;
+            display: flex;
+            align-items: center;
+            /* Center items vertically */
+            height: 12vh;
+            width: 100%;
+            gap: 2vw;
+            padding: 2vw 10.4vw;
+            justify-content: space-between;
+            background-color: #111;
+            z-index: 10;
+        }
+
+        .logo {
+            text-transform: uppercase;
+        }
+
+        nav h1 {
+            font-size: 1.6vw;
+        }
+
+        .nav-part2 {
+            display: flex;
+            gap: 2vw;
+            align-items: center;
+            /* Center items vertically */
+            padding: 1vh 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .nav-part2 h4 {
+            font-size: 0.73vw;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .nav-part2 h5 {
+            display: none;
+        }
+
+        .nav-part2 h5 span {
+            font-size: 0.77vw;
+            font-weight: 400;
+            transform: translateY(25px);
+            display: inline-block;
+        }
+
+        nav button {
+            background-color: #0BA34E;
+            display: flex;
+            align-items: center;
+            padding: 14px 20px;
+            font-size: 0.85vw;
+            text-transform: uppercase;
+            font-weight: 700;
+            border-radius: 50px;
+            border: none;
+        }
+
+        nav button svg {
+            height: 0.8vw;
+            margin-left: 1.6vw;
+        }
+
+        #nav-bottom {
+            width: 80%;
+            height: 1vh;
+            position: absolute;
+            top: 100%;
+            left: 10%;
+            background-color: #111;
+            z-index: 9;
+            border-bottom: 1px solid #fff;
+        }
+
+        #btn {
+            text-align: right;
+        }
+
+        a,
+        #login-page {
+            text-decoration: none;
+        }
+
+        .nav-elem a {
+            margin-top: 0px !important;
+        }
+
+        #login-page {
+            margin-top: 0px !important;
+        }
+
+
+        #content-container {
+            padding: 15vh 10vw;
+            background-color: #111;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #fff;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #fff;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #0BA34E;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #222;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #ccc;
+            margin-top: 20px;
+        }
+
+        .anker {
+            text-decoration: none;
+            color: #fff;
+            margin-top: 20px;
+            display: inline-block;
+            background-color: #0BA34E;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        a:hover {
+            background-color: #4f5bff;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            z-index: 11; /* Ensure the dropdown is above the nav line */
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 12; /* Ensure the dropdown content is above the nav line */
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <h1></h1>
+        <div class="nav-part2">
+            <div class="logo" id="logo">
+                <h1>Future flare</h1>
+            </div>
+            <div class="nav-elem">
+                <h3><a href="/">Home</a></h3>
+                <h5><span>Case Studies</span></h5>
+            </div>
+            <div class="nav-elem">
+                <h3><a href="/news" id="newss">News</a></h3>
+            </div>
+            <div class="nav-elem">
+                <h3> <a href="/market/trends">Market Trend</a></h3>
+            </div>
+        </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Account Management</button>
+            <div class="dropdown-content">
+                {% if current_user.is_authenticated %}
+                <a href="/logout" id="logout-page">Logout</a>
+                <a href="/trade" id="login-page">Trade</a>
+                {% else %}
+                <a href="/login" id="login-page">Login</a>
+                <a href="/signup" id="signup-page">Sign Up</a>
+                <a href="/admin_login" id="admin-page">Admin</a>
+                {% endif %}
+            </div>
+        </div>
+        <div id="nav-bottom">
+        </div>
+    </nav>
+    <div id="content-container">
+        <h1>My Portfolio</h1>
+        <table border="1">
+            <tr>
+                <th>Stock Symbol</th>
+                <th>Quantity</th>
+                <th>Total Value</th>
+            </tr>
+            {% for symbol, data in portfolio.items() %}
+            <tr>
+                <td>{{ symbol }}</td>
+                <td>{{ data.quantity }}</td>
+                <td>${{ data.total_value }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <p>Total Portfolio Value: ${{ total_portfolio_value }}</p>
+        <!-- <a class="anker" href="{{ url_for('home') }}">Back to Home</a> -->
+    </div>
+</body>
+
+</html>
+{% endblock %}
